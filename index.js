@@ -1,3 +1,5 @@
+/* Para que la aplicación funcione se debe tener una base de datos llamada "productsdb" en localhost, y correr los scripts para crear las tablas necesarias */
+
 const express = require("express");
 const app = express();
 const httpServer = require("http").createServer(app);
@@ -9,10 +11,10 @@ const io = require("socket.io")(httpServer, {
 const handlebars = require("express-handlebars");
 const productsRouter = require("./src/routes/productos");
 const ProductsController = require("./src/controllers/ProductsController.js");
-const MessagesApi = require("./MessagesApi.js");
+const MessagesController = require("./src/controllers/MessagesController.js");
 
 const productsController = new ProductsController();
-const messagesApi = new MessagesApi("messages.json");
+const messagesController = new MessagesController();
 
 const PORT = 4000;
 
@@ -20,7 +22,7 @@ const PORT = 4000;
 io.on("connection", async (socket) => {
   console.log("Usuario conectado");
 
-  //Mandamos los productos apenas se conecta un usuario
+  //Manejo de productos
   const products = await productsController.getAll();
   socket.emit("products", products);
 
@@ -30,13 +32,13 @@ io.on("connection", async (socket) => {
     io.sockets.emit("products", updatedProducts);
   });
 
-  //Mandamos tambien los Mensajes
-  const messages = await messagesApi.getAll();
+  //Manejo de mensajes
+  const messages = await messagesController.getAll();
   socket.emit("messages", messages);
 
   socket.on("new-message", async (message) => {
-    await messagesApi.save(message);
-    const updatedMessages = await messagesApi.getAll();
+    await messagesController.save(message);
+    const updatedMessages = await messagesController.getAll();
     io.sockets.emit("messages", updatedMessages);
   });
 });
@@ -58,7 +60,6 @@ app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/productos", productsRouter);
 app.get("/", (req, res) => {
   res.render("home");
 });

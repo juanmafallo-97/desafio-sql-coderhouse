@@ -1,0 +1,11 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "${workspaceFolder:desafio-sql}/DB/ecommerce.sqlite",
+      "name": "mensajes"
+    }
+  ],
+  "sqltools.useNodeRuntime": true
+}
