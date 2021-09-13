@@ -1,0 +1,21 @@
+{
+  "name": "des-soskects",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.3",
+    "knex": "^0.95.11",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.1.3",
+    "sqlite3": "^5.0.2"
+  }
+}

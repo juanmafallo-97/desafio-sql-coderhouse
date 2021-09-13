@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Auriculares",
+    "price": "4500",
+    "thumbnail": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+    "id": 1
+  },
+  {
+    "title": "Zapatillas",
+    "price": "5000",
+    "thumbnail": "https://images.unsplash.com/photo-1605034313761-73ea4a0cfbf3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    "id": 2
+  },
+  {
+    "title": "Perfume",
+    "price": "3140",
+    "thumbnail": "https://images.unsplash.com/photo-1587017539504-67cfbddac569?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+    "id": 3
+  }
+]
