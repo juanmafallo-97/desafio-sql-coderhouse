@@ -9,7 +9,7 @@ const io = require("socket.io")(httpServer, {
   }
 });
 const handlebars = require("express-handlebars");
-const productsRouter = require("./src/routes/productos");
+const testProductsRouter = require("./src/routes/productos-test");
 const ProductsController = require("./src/controllers/ProductsController.js");
 const MessagesController = require("./src/controllers/MessagesController.js");
 
@@ -59,6 +59,9 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Productos de prueba
+app.use("/api/productos-test", testProductsRouter);
 
 app.get("/", (req, res) => {
   res.render("home");
