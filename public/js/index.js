@@ -93,3 +93,13 @@ document.getElementById("message-form").addEventListener("submit", (e) => {
 
   content.value = "";
 });
+
+/* LogOut */
+
+document.getElementById("logout-button").addEventListener("click", () => {
+  setTimeout(() => {
+    fetch("http://localhost:4000/logout").then((response) => {
+      window.location.replace(response.url);
+    });
+  }, 2000);
+});

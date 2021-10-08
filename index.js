@@ -1,6 +1,8 @@
 /* Para que la aplicación funcione se debe tener una base de datos llamada "productsdb" en localhost, y correr los scripts para crear las tablas necesarias */
 
 const express = require("express");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const app = express();
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer, {
@@ -17,6 +19,23 @@ const productsController = new ProductsController();
 const messagesController = new MessagesController();
 
 const PORT = 4000;
+
+/* Express session */
+app.use(
+  session({
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://session-coder:session12345@cluster0.jiiuc.mongodb.net/session-coder?retryWrites=true&w=majority"
+    }),
+    mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+    cookie: {
+      maxAge: 600000
+    },
+    secret: "secreto",
+    resave: true,
+    saveUninitialized: true
+  })
+);
 
 /*  Config del socket  */
 io.on("connection", async (socket) => {
@@ -64,7 +83,37 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/productos-test", testProductsRouter);
 
 app.get("/", (req, res) => {
-  res.render("home");
+  console.log(req.session.user);
+  if (req.session.user) res.render("home", { user: req.session.user });
+  else res.redirect("/login");
+});
+
+// Login
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", (req, res) => {
+  try {
+    const user = req.body.user;
+    req.session.user = user;
+    res.redirect("/");
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
+
+app.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.json({ status: "Logout ERROR", body: err });
+    }
+    res.redirect("/");
+  });
+});
+
+app.get("/logout-screen", (req, res) => {
+  res.render("logoutScreen");
 });
 
 httpServer.listen(PORT, () =>
