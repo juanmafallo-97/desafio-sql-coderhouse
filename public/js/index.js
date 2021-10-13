@@ -96,10 +96,13 @@ document.getElementById("message-form").addEventListener("submit", (e) => {
 
 /* LogOut */
 
-document.getElementById("logout-button").addEventListener("click", () => {
-  setTimeout(() => {
-    fetch("http://localhost:4000/logout").then((response) => {
-      window.location.replace(response.url);
-    });
-  }, 2000);
+document.getElementById("logout-btn").addEventListener("click", () => {
+  fetch("http://localhost:4000/logout")
+    .then((response) => response.json())
+    .then((data) => {
+      const user = data.user ?? "";
+      alert(`Hasta luego ${user}!`);
+      window.location.reload();
+    })
+    .catch((error) => console.log(error));
 });

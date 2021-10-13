@@ -83,12 +83,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/productos-test", testProductsRouter);
 
 app.get("/", (req, res) => {
-  console.log(req.session.user);
   if (req.session.user) res.render("home", { user: req.session.user });
   else res.redirect("/login");
 });
 
-// Login
+// Sesión
 app.get("/login", (req, res) => {
   res.render("login");
 });
@@ -104,11 +103,12 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
+  const currentUser = req.session.user;
   req.session.destroy((err) => {
     if (err) {
       return res.json({ status: "Logout ERROR", body: err });
     }
-    res.redirect("/");
+    res.json({ user: currentUser });
   });
 });
 
